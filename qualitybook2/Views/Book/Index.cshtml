@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "BookList";
+}
+
+<div class="container">
+    <div class="row booklist-row">
+        <div class="col-lg-3 col-md-3 booklist-category">
+            <h1>Categories</h1>
+            <hr><div class="booklist-category">
+                    <ul>
+                        <li><a asp-action="Search" asp-route-categoryId="0" id="categoryId0" onclick="searchByCategory(this,0);return" class="active">All</a></li>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li><a asp-action="Search" asp-route-categoryId="@category.CategoryId" id=@("categoryId"+category.CategoryId) onclick="searchByCategory(this,@category.CategoryId);return">@category.CategoryName</a></li>
+                        }
+                    </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9">
+            @{
+                int i = 0;
+                foreach (var book in Model.Books)
+                {
+
+                    @if (i % 2 == 0)
+                    {
+                        @:<div class="row">
+                        }
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="thumbnail">
+                            <img src="~/images/@book.ImageUrl" alt="@book.BookName" class=".img-thumbnail" />
+                            <div class="caption">
+                                <h3>@book.BookName</h3>
+                                <p>@book.ShortDescription</p>
+                                <p class="home-p-price"></p>
+                                <div class="home-div-btn"><a href="#" class="btn btn-primary home-btn-addtocart" onclick="window.location.assign('shoppingcart.html')">Add to cart</a></div>
+                                <div class="home-div-price"><span class="home-price">@book.Price.ToString("c")</span></div>
+                                <p></p>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (i % 2 == 1)
+                    {
+                    @:</div>
+                }
+                    i++;
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var Request = new Object();
+        Request = GetRequest();
+
+        init();
+
+        function init() {
+            var domCategorySelected = document.getElementById("categoryId" + (Request["categoryId"] ? Request["categoryId"]:0));
+            searchByCategory(domCategorySelected, Request["categoryId"]);
+        }
+
+        function searchByCategory(obj,categoryId) {
+            //change style
+            $(".booklist-category li a.active").removeClass("active");
+            $(obj).addClass("active");
+        }
+
+        
+        function GetRequest() {
+            var url = location.search;
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+    </script>
+}

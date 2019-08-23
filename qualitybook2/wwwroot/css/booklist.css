@@ -1,0 +1,38 @@
+.booklist-category {
+  margin-top: 50px;
+}
+
+.booklist-category > ul > li {
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.booklist-category > ul > li > a {
+  color: white;
+}
+
+hr {
+  border: 2px solid white;
+}
+
+h1 {
+  text-align: center;
+}
+
+.row.booklist-row {
+  margin-top: 30px;
+}
+
+.booklist-category ul li .active {
+    color: #56c6c6;
+    font-size: 2.7rem;
+}
+
+.booklist-category ul li:hover {
+    color: #56c6c6;
+    font-size: 2.7rem;
+}
+.booklist-category ul li a:focus {
+    color: #56c6c6;
+    font-size:2.7rem;
+}

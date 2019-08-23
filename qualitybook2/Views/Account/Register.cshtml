@@ -1,0 +1,30 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
+            <div class="register-div">
+                <form method="post" asp-controller="Account" asp-action="Register" role="form">
+                    <h2 class="sr-only register-head">Registration</h2>
+                    <hr />
+                    <div asp-validation-summary="All" style="color:red;"></div>
+                    <div class="form-group">
+                        <input asp-for="UserName" class="form-control" name="username" placeholder="User Name" />
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Password" type="password" class="form-control" name="Password" placeholder="Password" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-block register-submit" type="submit"
+                                style="background-color: rgb(86,198,198);">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+.shoppingcart-div {
+  margin-top: 30px;
+}
+
+.shoppingcart-item {
+  border: 3px solid white;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 991px) {
+  .shoppingcart-div {
+    margin-top: 80px;
+  }
+}
+
+@media (max-width: 767px) {
+  .shoppingcart-div {
+    margin-top: 30px;
+  }
+}
+
+.shoppingcart-checkout {
+  background-color: rgb(86,198,198);
+  font-size: 3rem;
+}
+

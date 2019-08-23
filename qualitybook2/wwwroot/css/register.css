@@ -1,0 +1,22 @@
+.register-div {
+  margin-top: 30px;
+  padding-top: 20px;
+  background-color: white;
+}
+
+.register-submit {
+  border: none;
+  font-size: 2rem;
+}
+
+hr {
+  border: 2px solid black;
+}
+
+.register-head{
+    color: black;
+    position: relative;
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
