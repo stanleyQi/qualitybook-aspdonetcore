@@ -7,13 +7,13 @@
 {
     <li><a href="#">@User.Identity.Name</a></li>
     <li>
-        <a asp-controller="Account" asp-action="Logout">Login out</a>
+        <a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
     </li>
 }
 else
 {
-    <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+    <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
     <li>
-        <a asp-controller="Account" asp-action="Register" class="btn btn-default navbar-btn navbar-right action-button" role="button">Sign Up</a>
+        <a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-default navbar-btn navbar-right action-button" role="button">Sign Up</a>
     </li>
  }

@@ -47,7 +47,7 @@
         <nav class="navbar navbar-default navbar-fixed-top navigation-clean-search">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a asp-controller="Home" asp-action="Index" class="navbar-brand">Quality Book</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Quality Book</a>
                     <button data-toggle="collapse" class="navbar-toggle collapsed" data-target="#navcol-1">
                         <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                     </button>
@@ -57,22 +57,31 @@
                     @*<a asp-controller="Account" asp-action="Login">Login</a>
         <a asp-controller="Account" asp-action="Register" class="btn btn-default navbar-btn navbar-right action-button" role="button" >Sign Up</a>*@
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-controller="Contact" asp-action="Index">Contact Us</a></li>
-                        <li>@await Component.InvokeAsync("ShoppingCartSummaryComponent")</li>
+                        @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && !User.IsInRole("admin")))
+                        {
+                            <li><a asp-controller="Contact" asp-action="Index">Contact Us</a></li>
+                            <li>@await Component.InvokeAsync("ShoppingCartSummaryComponent")</li>
+                        }
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                        {
+                            <li><a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Managment</a></li>
+                        }
                         @await Html.PartialAsync("LoginPartial")
                         @*<li><a asp-controller="Account" asp-action="Login">Login</a></li>*@
                     </ul>
-                    <form class="navbar-form navbar-left navbar-style navbar-right" id="navcol-1" asp-controller="Book" asp-action="Search" method="get">
-                        <div class="form-group header-search">
-                            <label class="control-label" for="search-field"><i class="glyphicon glyphicon-search nav-search-icon"></i></label>
-                            <input type="search" class="form-control search-field" id="search-field" name="searchKey" placeholder="I am looking for..." />
-                            <select class="custom-select search-type" id="searchCriteria" name="searchCriteria">
-                                <option value="1" selected>By Book Name</option>
-                                <option value="2">By Price</option>
-                            </select>
-                        </div>
-                    </form>
-                    
+                    @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && !User.IsInRole("admin")))
+                    {
+                        <form class="navbar-form navbar-left navbar-style navbar-right" id="navcol-1" asp-controller="Book" asp-action="Search" method="get">
+                            <div class="form-group header-search">
+                                <label class="control-label" for="search-field"><i class="glyphicon glyphicon-search nav-search-icon"></i></label>
+                                <input type="search" class="form-control search-field" id="search-field" name="searchKey" placeholder="I am looking for..." />
+                                <select class="custom-select search-type" id="searchCriteria" name="searchCriteria">
+                                    <option value="1" selected>By Book Name</option>
+                                    <option value="2">By Price</option>
+                                </select>
+                            </div>
+                        </form>
+                    }
                 </div>
             </div>
         </nav>

@@ -33,7 +33,45 @@ namespace qualitybook2
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<IdentityUser, IdentityRole>()
-                        .AddEntityFrameworkStores<QualityBookDbContext>();
+                        .AddEntityFrameworkStores<QualityBookDbContext>()
+                        .AddDefaultTokenProviders();
+
+            //Password Strength Setting
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                //options.Password.RequireDigit = true;
+                //options.Password.RequiredLength = 8;
+                //options.Password.RequireNonAlphanumeric = false;
+                //options.Password.RequireUppercase = true;
+                //options.Password.RequireLowercase = false;
+                //options.Password.RequiredUniqueChars = 6;
+
+                // Lockout settings
+                //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                //options.Lockout.MaxFailedAccessAttempts = 10;
+                //options.Lockout.AllowedForNewUsers = true;
+
+                // User settings
+                //options.User.RequireUniqueEmail = true;
+            });
+
+            //Setting the Account Login page
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                //options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.LoginPath = "/Account/login"; // If the LoginPath is not set here,
+                                                      // ASP.NET Core will default to /Account/Login
+                options.LogoutPath = "/Account/SignedOut"; // If the LogoutPath is not set here,
+                                                        // ASP.NET Core will default to /Account/Logout
+                options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is
+                                                                    // not set here, ASP.NET Core
+                                                                    // will default to
+                                                                    // /Account/AccessDenied
+                options.SlidingExpiration = true;
+            });
 
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
@@ -48,7 +86,7 @@ namespace qualitybook2
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -66,10 +104,34 @@ namespace qualitybook2
             app.UseIdentity();
             app.UseMvc(routes =>
             {
+                routes.MapRoute(name: "Admin",
+                    template: "{area:exists}/{controller=Home}/{action=Index}");
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            CreateUserRoles(services).Wait();
+        }
+
+        private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            IdentityResult roleResult;
+            //Adding Admin Role
+            var roleCheck = await RoleManager.RoleExistsAsync("admin");
+            if (!roleCheck)
+            {
+                //create the roles and seed them to the database
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("admin"));
+            }
+            //Assign Admin role to the main User here we have given our newly registered
+            //login id for Admin management
+            IdentityUser user = await UserManager.FindByNameAsync("admin");
+            var User = new IdentityUser();
+            await UserManager.AddToRoleAsync(user, "admin");
         }
     }
 }

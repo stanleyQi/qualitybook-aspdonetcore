@@ -45,8 +45,9 @@ namespace qualitybook2.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                 if (result.Succeeded)
                 {
-                    if (string.IsNullOrEmpty(loginViewModel.ReturnUrl))  return RedirectToAction("Index","Home");
-                    
+                    if (string.IsNullOrEmpty(loginViewModel.ReturnUrl) && !_userManager.GetRolesAsync(user).Result.Contains("admin"))  return RedirectToAction("Index","Home");
+                    if (string.IsNullOrEmpty(loginViewModel.ReturnUrl) && _userManager.GetRolesAsync(user).Result.Contains("admin")) return RedirectToAction("Index", "Admin/Home");
+
                     return Redirect(loginViewModel.ReturnUrl);
                     
                 }
@@ -86,6 +87,12 @@ namespace qualitybook2.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
