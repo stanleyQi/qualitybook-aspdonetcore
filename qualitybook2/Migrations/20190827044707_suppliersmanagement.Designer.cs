@@ -11,9 +11,10 @@ using System;
 namespace qualitybook2.Migrations
 {
     [DbContext(typeof(QualityBookDbContext))]
-    partial class QualityBookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190827044707_suppliersmanagement")]
+    partial class suppliersmanagement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

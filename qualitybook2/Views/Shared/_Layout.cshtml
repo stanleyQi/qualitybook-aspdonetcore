@@ -42,24 +42,46 @@
         }
         @if (@ViewData["Title"].ToString() == "AdminCategoriesIndex")
         {
-            <link rel="stylesheet" href="~/css/admin/admincategories-index.css">
+            <link rel="stylesheet" href="~/css/admin/categories/admincategories-index.css">
         }
         @if (@ViewData["Title"].ToString() == "AdminCategoriesCreate")
         {
-            <link rel="stylesheet" href="~/css/admin/admincategories-create.css">
+            <link rel="stylesheet" href="~/css/admin/categories/admincategories-create.css">
         }
         @if (@ViewData["Title"].ToString() == "AdminCategoriesEdit")
         {
-            <link rel="stylesheet" href="~/css/admin/admincategories-edit.css">
+            <link rel="stylesheet" href="~/css/admin/categories/admincategories-edit.css">
         }
         @if (@ViewData["Title"].ToString() == "AdminCategoriesDelete")
         {
-            <link rel="stylesheet" href="~/css/admin/admincategories-delete.css">
+            <link rel="stylesheet" href="~/css/admin/categories/admincategories-delete.css">
         }
         @if (@ViewData["Title"].ToString() == "AdminCategoriesDetail")
         {
-            <link rel="stylesheet" href="~/css/admin/admincategories-detail.css">
+            <link rel="stylesheet" href="~/css/admin/categories/admincategories-detail.css">
         }
+
+        @if (@ViewData["Title"].ToString() == "AdminSuppliersIndex")
+        {
+            <link rel="stylesheet" href="~/css/admin/suppliers/adminsuppliers-index.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminSuppliersCreate")
+        {
+            <link rel="stylesheet" href="~/css/admin/suppliers/adminsuppliers-create.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminSuppliersEdit")
+        {
+            <link rel="stylesheet" href="~/css/admin/suppliers/adminsuppliers-edit.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminSuppliersDelete")
+        {
+            <link rel="stylesheet" href="~/css/admin/suppliers/adminsuppliers-delete.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminSuppliersDetail")
+        {
+            <link rel="stylesheet" href="~/css/admin/suppliers/adminsuppliers-detail.css">
+        }
+
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/site.min.css">
