@@ -1,10 +1,110 @@
 ﻿
 @{
-    ViewData["Title"] = "Admin Index";
+    ViewData["Title"] = "AdminIndex";
 }
 
 <div class="container">
-    <div class="row"><h2>Admin Index</h2></div>
+    <div class="row adminindex-menu">
+            <ul>
+                <li><a asp-area="Admin" asp-controller="Categories" asp-action="index">Category Managment  |  </a></li>
+                <li><a href="#">Supplier Managment  |  </a></li>
+                <li><a href="#">Book Managment  |  </a></li>
+                <li><a href="#">Customer Managment  |  </a></li>
+                <li><a href="#">Order Managment</a></li>
+            </ul>
+    </div>
+    <div class="row">
+        <h2>Customers</h2>
+        <table class="table table1" style="border:2px solid white;">
+            <thead class="thead-dark"  style="border:2px solid white;">
+                <tr>
+                    <th scope="col">Customer ID</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr tabindex="1">
+                    <th scope="row">1</th>
+                    <td>customer1</td>
+                    <td>c1@gmail.com</td>
+                    <td>1111111111</td>
+                    <td>22 Kitiwake drive, Schnapper rock Auckland</td>
+                    <td class="adminindex-operation">Edit | Delete | Disable</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <h2>Orders</h2>
+        <table class="table table2"  style="border:2px solid white;">
+            <thead class="thead-light"  style="border:2px solid white;">
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Placed DateTime</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">TotalAmount</th>
+                    <th scope="col">SubTotal</th>
+                    <th scope="col">GST</th>
+                    <th scope="col">GrandTotal</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr tabindex="2">
+                    <th scope="row">11111111111</th>
+                    <td>12-08-2019 12:00:01</td>
+                    <td>Shipped</td>
+                    <td>2</td>
+                    <td>$ 100</td>
+                    <td>$ 15</td>
+                    <td>$ 115</td>
+                    <td class="adminindex-operation">Change Status</td>
+                </tr>
+                <tr  tabindex="3">
+                    <th scope="row">22222222222</th>
+                    <td>22-08-2019 12:02:02</td>
+                    <td>Waiting</td>
+                    <td>1</td>
+                    <td>$ 200</td>
+                    <td>$ 30</td>
+                    <td>$ 230</td>
+                    <td class="adminindex-operation">Change Status</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <h2>Order Details</h2>
+        <table class="table table3"  style="border:2px solid white;">
+            <thead class="thead-light"  style="border:2px solid white;">
+                <tr>
+                    <th scope="col">Book Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Supplier</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">book1</th>
+                    <td>sprot and art</td>
+                    <td>Microsoft</td>
+                    <td>$ 30</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <th scope="row">book2</th>
+                    <td>Maori culture</td>
+                    <td>New Zealand</td>
+                    <td>$ 70</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

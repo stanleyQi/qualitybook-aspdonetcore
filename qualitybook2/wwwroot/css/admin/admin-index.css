@@ -1,0 +1,22 @@
+﻿.row.adminindex-menu {
+    margin-top:20px;
+}
+
+.row .adminindex-menu ul {
+    margin:0 auto;
+}
+ul li{
+    display: inline-block;
+   margin:0 auto;
+}
+
+ul li a{
+    font-size: 2.2rem;
+}
+
+.adminindex-operation{
+    color:#0ce3ac;
+}
+table tbody tr:hover, table tbody tr:active, table tbody tr:focus {
+    background-color: grey;
+}

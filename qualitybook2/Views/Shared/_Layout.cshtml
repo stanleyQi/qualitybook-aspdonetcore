@@ -36,6 +36,30 @@
         {
             <link rel="stylesheet" href="~/css/register.css">
         }
+        @if (@ViewData["Title"].ToString() == "AdminIndex")
+        {
+            <link rel="stylesheet" href="~/css/admin/admin-index.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminCategoriesIndex")
+        {
+            <link rel="stylesheet" href="~/css/admin/admincategories-index.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminCategoriesCreate")
+        {
+            <link rel="stylesheet" href="~/css/admin/admincategories-create.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminCategoriesEdit")
+        {
+            <link rel="stylesheet" href="~/css/admin/admincategories-edit.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminCategoriesDelete")
+        {
+            <link rel="stylesheet" href="~/css/admin/admincategories-delete.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminCategoriesDetail")
+        {
+            <link rel="stylesheet" href="~/css/admin/admincategories-detail.css">
+        }
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/site.min.css">
