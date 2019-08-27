@@ -19,6 +19,8 @@ namespace qualitybook2.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
+        //public DbSet<Customer> Customers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //base.OnModelCreating(builder);
@@ -30,6 +32,8 @@ namespace qualitybook2.Data
             builder.Entity<Category>().ToTable("Categories");
             builder.Entity<Supplier>().ToTable("Suppliers");
             builder.Entity<ShoppingCartItem>().ToTable("ShoppingCartItems");
+
+            //builder.Entity<Customer>().ToTable("AspNetUsers");
         }
     }
 }

@@ -1,0 +1,17 @@
+﻿.row-small {
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+table{
+    border:2px solid white;
+}
+thead{
+    border-bottom:2px solid white;
+}
+td, th {
+    text-align: center;
+}
+table tbody tr:hover, table tbody tr:active, table tbody tr:focus {
+    background-color: grey;
+}

@@ -82,6 +82,28 @@
             <link rel="stylesheet" href="~/css/admin/suppliers/adminsuppliers-detail.css">
         }
 
+        @if (@ViewData["Title"].ToString() == "AdminCustomersIndex")
+        {
+            <link rel="stylesheet" href="~/css/admin/customers/admincustomers-index.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminCustomersCreate")
+        {
+            <link rel="stylesheet" href="~/css/admin/customers/admincustomers-create.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminCustomersEdit")
+        {
+            <link rel="stylesheet" href="~/css/admin/customers/admincustomers-edit.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminCustomersDelete")
+        {
+            <link rel="stylesheet" href="~/css/admin/customers/admincustomers-delete.css">
+        }
+        @if (@ViewData["Title"].ToString() == "AdminCustomersDetail")
+        {
+            <link rel="stylesheet" href="~/css/admin/customers/admincustomers-detail.css">
+        }
+
+        
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/site.min.css">
