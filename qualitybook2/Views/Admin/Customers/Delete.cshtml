@@ -1,7 +1,7 @@
-﻿@model qualitybook2.Models.Category
+﻿@model qualitybook2.Models.Customer
 
 @{
-    ViewData["Title"] = "AdminCategoriesDelete";
+    ViewData["Title"] = "AdminCustomersDelete";
 }
 
 <div class="container">
@@ -10,19 +10,19 @@
 
         <h3>Are you sure you want to delete this?</h3>
         <div>
-            <h4>Category</h4>
+            <h4>Customer</h4>
             <hr />
             <dl class="dl-horizontal">
                 <dt>
-                    @Html.DisplayNameFor(model => model.CategoryName)
+                    @Html.DisplayNameFor(model => model.CustomerName)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.CategoryName)
+                    @Html.DisplayFor(model => model.CustomerName)
                 </dd>
             </dl>
 
             <form asp-action="Delete">
-                <input type="hidden" asp-for="CategoryId" />
+                <input type="hidden" asp-for="CustomerId" />
                 <input type="submit" value="Delete" class="btn btn-default" /> |
                 <a asp-action="Index">Back to List</a>
             </form>

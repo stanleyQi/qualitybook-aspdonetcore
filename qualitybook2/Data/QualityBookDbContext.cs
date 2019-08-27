@@ -5,7 +5,7 @@ using qualitybook2.Models;
 
 namespace qualitybook2.Data
 {
-    public class QualityBookDbContext : IdentityDbContext<IdentityUser>
+    public class QualityBookDbContext : IdentityDbContext<ApplicationUser>
     {
         public QualityBookDbContext(DbContextOptions<QualityBookDbContext> options): base(options)
         {

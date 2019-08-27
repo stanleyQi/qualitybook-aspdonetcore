@@ -1,24 +1,49 @@
-﻿@model qualitybook2.Models.Category
+﻿@model qualitybook2.Models.Customer
 
 @{
-    ViewData["Title"] = "AdminCategoriesEdit";
+    ViewData["Title"] = "AdminCustomersEdit";
 }
 
 <div class="container">
     <div class="row row-small">
         <h2>Edit</h2>
 
-        <h4>Category</h4>
+        <h4>Customer</h4>
         <hr />
         <div class="row">
             <div class="col-md-4">
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="CategoryId" />
+                    <input type="hidden" asp-for="CustomerId" />
                     <div class="form-group">
-                        <label asp-for="CategoryName" class="control-label"></label>
-                        <input asp-for="CategoryName" class="form-control" />
-                        <span asp-validation-for="CategoryName" class="text-danger"></span>
+                        <label asp-for="CustomerName" class="control-label"></label>
+                        <input asp-for="CustomerName" class="form-control" />
+                        <span asp-validation-for="CustomerName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumberHome" class="control-label"></label>
+                        <input asp-for="PhoneNumberHome" class="form-control" />
+                        <span asp-validation-for="PhoneNumberHome" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumberWork" class="control-label"></label>
+                        <input asp-for="PhoneNumberWork" class="form-control" />
+                        <span asp-validation-for="PhoneNumberWork" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumberMobile" class="control-label"></label>
+                        <input asp-for="PhoneNumberMobile" class="form-control" />
+                        <span asp-validation-for="PhoneNumberMobile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-default" />

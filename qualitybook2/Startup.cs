@@ -32,7 +32,7 @@ namespace qualitybook2
             services.AddDbContext<QualityBookDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                         .AddEntityFrameworkStores<QualityBookDbContext>()
                         .AddDefaultTokenProviders();
 
@@ -117,7 +117,7 @@ namespace qualitybook2
         private async Task CreateUserRoles(IServiceProvider serviceProvider)
         {
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             IdentityResult roleResult;
             //Adding Admin Role
@@ -129,8 +129,8 @@ namespace qualitybook2
             }
             //Assign Admin role to the main User here we have given our newly registered
             //login id for Admin management
-            IdentityUser user = await UserManager.FindByNameAsync("admin");
-            var User = new IdentityUser();
+            ApplicationUser user = await UserManager.FindByNameAsync("admin");
+            var User = new ApplicationUser();
             await UserManager.AddToRoleAsync(user, "admin");
         }
     }

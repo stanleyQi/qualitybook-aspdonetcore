@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using qualitybook2.Models;
 using qualitybook2.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,10 +15,10 @@ namespace qualitybook2.Controllers
     public class AccountController : Controller
     {
 
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -52,6 +53,13 @@ namespace qualitybook2.Controllers
                     
                 }
             }
+
+            if (_userManager.Users.Where(u => u.UserName == loginViewModel.UserName).Count()>0 && _userManager.Users.Where(u=>u.UserName== loginViewModel.UserName).FirstOrDefault().LockoutEnd!=null)
+            {
+                ModelState.AddModelError("", "The user is locked.");
+                return View(loginViewModel);
+            }
+
             ModelState.AddModelError("", "Wrong user name or password.");
             return View(loginViewModel);
         }
@@ -67,7 +75,7 @@ namespace qualitybook2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser() { UserName = loginViewModel.UserName };
+                var user = new ApplicationUser() { UserName = loginViewModel.UserName };
                 var result = await _userManager.CreateAsync(user, loginViewModel.Password);
 
                 if (result.Succeeded)

@@ -5,15 +5,15 @@
 }
 
 <div class="container">
-    <div class="row row-small">
+    <div class="row row-big">
         <h2>AdminCustomersIndex</h2>
-        <p>
+        @*<p>
             <a asp-action="Create">Create New</a>
-        </p>
+        </p>*@
         <table class="table">
             <thead>
                 <tr>
-                    <th>
+                    <th style="display:none;">
                         @Html.DisplayNameFor(model => model.CustomerId)
                     </th>
                     <th>
@@ -35,7 +35,7 @@
                         @Html.DisplayNameFor(model => model.Address)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.LockoutEnabled)
+                        @Html.DisplayNameFor(model => model.LockoutEnd)
                     </th>
                     <th>Operation</th>
                 </tr>
@@ -44,7 +44,7 @@
                 @foreach (var item in Model)
                 {
                 <tr tabindex="1">
-                    <td>
+                    <td style="width:15%;display:none;">
                         @Html.DisplayFor(modelItem => item.CustomerId)
                     </td>
                     <td>
@@ -66,11 +66,19 @@
                         @Html.DisplayFor(modelItem => item.Address)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.LockoutEnabled)
+                        @Html.DisplayFor(modelItem => item.LockoutEnd)
                     </td>
-                    <td>
+                    <td style="width:200px">
+                        @if (item.LockoutEnd == null)
+                        {
+                        <a asp-action="Lockout" asp-route-id="@item.CustomerId">Lockout |</a>
+                        }
+                        else
+                        {
+                        <a asp-action="Unlock" asp-route-id="@item.CustomerId">Unlock |</a>
+                        }
+
                         <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
                         <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
                     </td>
                 </tr>

@@ -1,6 +1,7 @@
 ﻿.row-big{
-    width:90%;
+    width:100%;
     margin: 0 auto;
+    max-width:1200px;
 }
 table{
     border:2px solid white;
@@ -13,4 +14,8 @@ td, th {
 }
 table tbody tr:hover, table tbody tr:active, table tbody tr:focus {
     background-color: grey;
+}
+
+.container {
+    width:100%;
 }
