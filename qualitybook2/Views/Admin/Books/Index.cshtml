@@ -13,7 +13,10 @@
         </p>
         <table class="table" style="border:2px solid white">
             <thead>
-                <tr  style="border-bottom:2px solid white">
+                <tr style="border-bottom:2px solid white">
+                    <th>
+                        Image
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.BookName)
                     </th>
@@ -21,20 +24,20 @@
                         @Html.DisplayNameFor(model => model.ShortDescription)
                     </th>
                     @*<th>
-                        @Html.DisplayNameFor(model => model.Description)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ImageUrl)
-                    </th>*@
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>*@
                     <th>
                         @Html.DisplayNameFor(model => model.Price)
                     </th>
                     @*<th>
-                        @Html.DisplayNameFor(model => model.Author)
-                    </th>*@
+            @Html.DisplayNameFor(model => model.Author)
+        </th>*@
                     @*<th>
-                        @Html.DisplayNameFor(model => model.PreferredFlag)
-                    </th>*@
+            @Html.DisplayNameFor(model => model.PreferredFlag)
+        </th>*@
                     <th>
                         @Html.DisplayNameFor(model => model.Category)
                     </th>
@@ -47,40 +50,44 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.BookName)
-                        </td>
-                        <td style="max-width:200px;text-align:left">
-                            @Html.DisplayFor(modelItem => item.ShortDescription)
-                        </td>
-                        @*<td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ImageUrl)
-                        </td>*@
-                        <td>
-                            $ @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        @*<td>
-                            @Html.DisplayFor(modelItem => item.Author)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PreferredFlag)
-                        </td>*@
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        <img style="width: 80px; height: auto;" src=/images/@Html.DisplayFor(modelItem => item.ImageUrl) alt="image">
+                    </td>
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookName)
+                    </td>
+                    <td style="max-width:200px;text-align:left">
+                        @Html.DisplayFor(modelItem => item.ShortDescription)
+                    </td>
+                    @*<td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImageUrl)
+        </td>*@
+                    <td>
+                        $ @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    @*<td>
+            @Html.DisplayFor(modelItem => item.Author)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PreferredFlag)
+        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

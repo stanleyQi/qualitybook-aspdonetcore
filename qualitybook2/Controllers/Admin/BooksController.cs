@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +20,14 @@ namespace qualitybook2.Controllers.Admin
     public class BooksController : Controller
     {
         private readonly QualityBookDbContext _context;
+        private readonly IHostingEnvironment _hostingEnv;
+
         private string ViewPath = "Views/Admin/Books/";
 
-        public BooksController(QualityBookDbContext context)
+        public BooksController(QualityBookDbContext context, IHostingEnvironment hEnv)
         {
             _context = context;
+            _hostingEnv = hEnv;
         }
 
         // GET: Books
@@ -63,17 +70,54 @@ namespace qualitybook2.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookId,BookName,ShortDescription,Description,ImageUrl,Price,Author,PreferredFlag,CategoryId,SupplierId")] Book book)
+        public async Task<IActionResult> Create([Bind("BookId,BookName,ShortDescription,Description,Price,Author,PreferredFlag,CategoryId,SupplierId")] Book book, IList<IFormFile> _files)
         {
-            if (ModelState.IsValid)
+            var relativeName = "";
+            var fileName = "";
+
+            if (_files == null || _files.Count!=1)
             {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                relativeName = "bookdefault.jpg";
             }
-            ViewData["Category"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", book.CategoryId);
-            ViewData["Supplier"] = new SelectList(_context.Suppliers, "SupplierId", "SupplierName", book.SupplierId);
-            return View(ViewPath + "Create.cshtml", book);
+            else
+            {
+                    fileName = ContentDispositionHeaderValue
+                                      .Parse(_files[0].ContentDisposition)
+                                      .FileName
+                                      .Trim('"');
+                    //Path for localhost
+                    relativeName = DateTime.Now.ToString("ddMMyyyy-HHmmssffffff") + fileName;
+
+                    using (FileStream fs = System.IO.File.Create(_hostingEnv.WebRootPath + "/images/"+relativeName))
+                    {
+                        await _files[0].CopyToAsync(fs);
+                        fs.Flush();
+                    }
+            }
+
+            book.ImageUrl = relativeName;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(book);
+                    await _context.SaveChangesAsync();
+
+                    //save the image uploaed into wwwroot/images folder
+
+
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["Category"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", book.CategoryId);
+                ViewData["Supplier"] = new SelectList(_context.Suppliers, "SupplierId", "SupplierName", book.SupplierId);
+                return View(ViewPath + "Create.cshtml", book);
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("", "Unable to save changes. " + "Try again, and if the problem persists " + "see your system administrator.");
+            }
+            return View(book);
         }
 
         // GET: Books/Edit/5
@@ -99,8 +143,32 @@ namespace qualitybook2.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int BookId, [Bind("BookId,BookName,ShortDescription,Description,ImageUrl,Price,Author,PreferredFlag,CategoryId,SupplierId")] Book book)
+        public async Task<IActionResult> Edit(int BookId, [Bind("BookId,BookName,ShortDescription,Description,Price,Author,PreferredFlag,CategoryId,SupplierId")] Book book, IList<IFormFile> _files)
         {
+            var relativeName = "";
+            var fileName = "";
+
+            if (_files == null || _files.Count != 1)
+            {
+                relativeName = "bookdefault.jpg";
+            }
+            else
+            {
+                fileName = ContentDispositionHeaderValue
+                                  .Parse(_files[0].ContentDisposition)
+                                  .FileName
+                                  .Trim('"');
+                //Path for localhost
+                relativeName = DateTime.Now.ToString("ddMMyyyy-HHmmssffffff") + fileName;
+
+                using (FileStream fs = System.IO.File.Create(_hostingEnv.WebRootPath + "/images/" + relativeName))
+                {
+                    await _files[0].CopyToAsync(fs);
+                    fs.Flush();
+                }
+            }
+
+            book.ImageUrl = relativeName;
             if (BookId != book.BookId)
             {
                 return NotFound();
