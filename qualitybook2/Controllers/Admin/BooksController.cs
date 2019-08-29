@@ -26,8 +26,8 @@ namespace qualitybook2.Controllers.Admin
         // GET: Books
         public async Task<IActionResult> Index()
         {
-            var qualityBookDbContext = _context.Books.Include(b => b.Category).Include(b => b.Supplier);
-            return View(ViewPath + "Index.cshtml", await qualityBookDbContext.ToListAsync());
+            var BookList = _context.Books.Include(b => b.Category).Include(b => b.Supplier);
+            return View(ViewPath + "Index.cshtml", await BookList.ToListAsync());
         }
 
         // GET: Books/Details/5
