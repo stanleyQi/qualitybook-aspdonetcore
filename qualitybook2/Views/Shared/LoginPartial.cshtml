@@ -5,6 +5,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
+    @*<li><a asp-area="" asp-controller="Profile" asp-action="Index">@User.Identity.Name</a></li>*@
     <li><a href="#">@User.Identity.Name</a></li>
     <li>
         <a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
@@ -16,4 +17,4 @@ else
     <li>
         <a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-default navbar-btn navbar-right action-button" role="button">Sign Up</a>
     </li>
- }
+}

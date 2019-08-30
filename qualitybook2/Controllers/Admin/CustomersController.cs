@@ -75,7 +75,7 @@ namespace qualitybook2.Controllers.Admin
             return RedirectToAction(nameof(Index));
         }
 
-        private static List<Customer> ConvertFromAppUsersToCustomers(List<ApplicationUser> ListIdnUser)
+        public static List<Customer> ConvertFromAppUsersToCustomers(List<ApplicationUser> ListIdnUser)
         {
 
             var Customers = new List<Customer>();

@@ -5,6 +5,7 @@
 <div class="container">
     <div class="shoppingcart-div">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <div style="color:red;">@TempData["empty"] </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -47,7 +48,7 @@
                                     <a asp-controller="ShoppingCart" asp-action="RemoveFromCart" asp-route-bookId="@item.Book.BookId" style="font-size:3rem;text-decoration:none;margin-left:10px;" onclick="if(@item.Amount==1){return false;}">-</a>
                                 </td>
                                 <td class="col-sm-1 col-md-1 text-center"><strong>@item.Book.Price.ToString("c")</strong></td>
-                                <td class="col-sm-1 col-md-1 text-center"><strong>@((item.Book.Price*item.Amount).ToString("c"))</strong></td>
+                                <td class="col-sm-1 col-md-1 text-center"><strong>@((item.Book.Price * item.Amount).ToString("c"))</strong></td>
                                 <td class="col-sm-1 col-md-1">
                                     <a asp-controller="ShoppingCart" asp-action="RemoveFromCart" asp-route-bookId="@item.Book.BookId" asp-route-flg="delete" class="btn btn-danger" onclick="if (!confirm('Are you sure you want to remove this book?')) { return false;} ">
                                         <span class="glyphicon glyphicon-remove"></span> Remove
@@ -94,7 +95,7 @@
                         <td>   </td>
                         <td>   </td>
                         <td>
-                            <a asp-controller="ShoppingCart" asp-action="ClearCart"  class="btn btn-default"  onclick="if (!confirm('Are you sure you want to clear shopping cart?')) { return false;} ">
+                            <a asp-controller="ShoppingCart" asp-action="ClearCart" class="btn btn-default" onclick="if (!confirm('Are you sure you want to clear shopping cart?')) { return false;} ">
                                 Clear Shopping Cart
                             </a>
                         </td>
