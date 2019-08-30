@@ -111,11 +111,12 @@ namespace qualitybook2
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            CreateUserRoles(services).Wait();
+            //CreateUserRoles(services).Wait();
         }
 
         private async Task CreateUserRoles(IServiceProvider serviceProvider)
         {
+            
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
@@ -127,11 +128,15 @@ namespace qualitybook2
                 //create the roles and seed them to the database
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("admin"));
             }
-            //Assign Admin role to the main User here we have given our newly registered
-            //login id for Admin management
-            ApplicationUser user = await UserManager.FindByNameAsync("admin");
-            var User = new ApplicationUser();
-            await UserManager.AddToRoleAsync(user, "admin");
+
+            if (UserManager.FindByNameAsync("admin") != null)
+            {
+                //Assign Admin role to the main User here we have given our newly registered
+                //login id for Admin management
+                ApplicationUser user = await UserManager.FindByNameAsync("admin");
+                var User = new ApplicationUser();
+                await UserManager.AddToRoleAsync(user, "admin");
+            }
         }
     }
 }
