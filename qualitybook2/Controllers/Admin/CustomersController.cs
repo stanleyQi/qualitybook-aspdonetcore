@@ -96,7 +96,7 @@ namespace qualitybook2.Controllers.Admin
             return Customers;
         }
 
-        private static List<ApplicationUser> ConvertFromCustomersToAppUsers(List<Customer> ListCustomer)
+        public static List<ApplicationUser> ConvertFromCustomersToAppUsers(List<Customer> ListCustomer)
         {
 
             var Users = new List<ApplicationUser>();
@@ -117,7 +117,7 @@ namespace qualitybook2.Controllers.Admin
             return Users;
         }
 
-        private static void ConvertFromAppUserToCustomer(ApplicationUser appUser1, ref Customer customer)
+        public static void ConvertFromAppUserToCustomer(ApplicationUser appUser1, ref Customer customer)
         {
 
             customer.CustomerId = appUser1.Id;
@@ -130,7 +130,7 @@ namespace qualitybook2.Controllers.Admin
             //customer.LockoutEnd = IdnUser.LockoutEnd;
         }
 
-        private static void ConvertFromCustomerToAppUser(Customer Customer,ref ApplicationUser appUser1)
+        public static void ConvertFromCustomerToAppUser(Customer Customer,ref ApplicationUser appUser1)
         {
             appUser1.Id = Customer.CustomerId;
             appUser1.UserName = Customer.CustomerName;

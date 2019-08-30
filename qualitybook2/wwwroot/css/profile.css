@@ -1,0 +1,9 @@
+.container.profile-container {
+  width: 80%;
+  max-width: 1000px;
+}
+
+.row.profile-row {
+  /*border-bottom: 2px solid white;*/
+}
+

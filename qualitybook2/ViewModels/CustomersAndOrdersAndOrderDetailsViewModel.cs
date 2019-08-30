@@ -9,6 +9,8 @@ namespace qualitybook2.ViewModels
     public class CustomersAndOrdersAndOrderDetailsViewModel
     {
         public string CustomerIdCurrent { get; set; }
+        public Customer CustomerCurrent { get; set; }
+
         public string OrderIdCurrent { get; set; }
 
         public IEnumerable<Customer> Customers { get; set; }

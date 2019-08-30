@@ -5,8 +5,8 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    @*<li><a asp-area="" asp-controller="Profile" asp-action="Index">@User.Identity.Name</a></li>*@
-    <li><a href="#">@User.Identity.Name</a></li>
+    <li><a asp-area="" asp-controller="Profile" asp-action="Index">@User.Identity.Name</a></li>
+    @*<li><a href="#">@User.Identity.Name</a></li>*@
     <li>
         <a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
     </li>
