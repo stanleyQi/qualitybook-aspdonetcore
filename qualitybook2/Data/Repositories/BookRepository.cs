@@ -25,7 +25,7 @@ namespace qualitybook2.Data.Repositories
             .Include(b => b.Category)
             .Include(b => b.Supplier);
 
-        public IEnumerable<Book> SearchedBooks(string searchKey="", int searchCriteria=1,int categoryId = 0)
+        public IQueryable<Book> SearchedBooks(string searchKey="", int searchCriteria=1,int categoryId = 0)
         {
             if (searchCriteria == 1&& categoryId!=0)
             {

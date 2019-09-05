@@ -17,6 +17,32 @@
             </div>
         </div>
         <div class="col-lg-9 col-md-9">
+            <div class="user-booklist-sort">
+                SortBy:  
+                <a asp-action="Search" asp-route-sortOrder="ByName" asp-route-categoryId="@ViewData["categoryId"]" >Name</a> | 
+                <a asp-action="Search" asp-route-sortOrder="ByPrice" asp-route-categoryId="@ViewData["categoryId"]" >Price</a>
+            </div>
+            <div  class="user-booklist-pagenation">
+                @{
+                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                }
+                <a asp-action="Search"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-categoryId="@ViewData["categoryId"]" 
+                   class="btn btn-default @prevDisabled">
+                    Previous
+                </a>
+                <a asp-action="Search"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-categoryId="@ViewData["categoryId"]" 
+                   class="btn btn-default @nextDisabled">
+                    Next
+                </a>
+            </div>
+
             @{
                 int i = 0;
                 foreach (var book in Model.Books)

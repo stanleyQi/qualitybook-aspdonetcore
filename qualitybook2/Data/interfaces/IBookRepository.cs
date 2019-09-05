@@ -11,6 +11,6 @@ namespace qualitybook2.Data.interfaces
         IEnumerable<Book> Books { get; }
         IEnumerable<Book> PreferredBooks { get;}
 
-        IEnumerable<Book> SearchedBooks(string searchKey,int searchCriteria,int categoryId);
+        IQueryable<Book> SearchedBooks(string searchKey,int searchCriteria,int categoryId);
     }
 }

@@ -10,5 +10,8 @@ namespace qualitybook2.ViewModels
     {
         public IEnumerable<Book> Books { get; set; }
         public IEnumerable<Category> Categories { get; set; }
+        public bool HasPreviousPage { get; set; }
+        public bool HasNextPage { get;set; }
+        public int PageIndex { get;set; }
     }
 }
