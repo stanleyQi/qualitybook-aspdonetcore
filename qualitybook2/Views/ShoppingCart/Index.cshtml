@@ -95,9 +95,12 @@
                         <td>   </td>
                         <td>   </td>
                         <td>
+                            @if (Model.ShoppingCart.ShoppingCartItems.Count > 0)
+                            {
                             <a asp-controller="ShoppingCart" asp-action="ClearCart" class="btn btn-default" onclick="if (!confirm('Are you sure you want to clear shopping cart?')) { return false;} ">
                                 Clear Shopping Cart
                             </a>
+                            }
                         </td>
                         <td>
                             <a asp-controller="Home" asp-action="Index" class="btn btn-default">
@@ -105,9 +108,10 @@
                             </a>
                         </td>
                         <td>
-                            <a asp-controller="Order" asp-action="Checkout" class="btn btn-success shoppingcart-checkout">
-                                Checkout <span class="glyphicon glyphicon-play"></span>
-                            </a>
+                            @if (Model.ShoppingCart.ShoppingCartItems.Count > 0) {
+                            <a asp-controller="Order" asp-action="Checkout" class="btn btn-success shoppingcart-checkout" style="">
+                                Checkout <span class="glyphicon glyphicon-play"></span></a>
+                            }
                         </td>
                     </tr>
                 </tbody>

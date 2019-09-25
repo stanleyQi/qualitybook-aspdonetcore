@@ -1,4 +1,4 @@
-﻿@model LoginViewModel
+﻿@model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
 }
@@ -12,10 +12,25 @@
                     <hr />
                     <div asp-validation-summary="All" style="color:red;"></div>
                     <div class="form-group">
-                        <input asp-for="UserName" class="form-control" name="username" placeholder="User Name" />
+                        <input asp-for="UserName" class="form-control" name="Username" placeholder="User Name" />
                     </div>
                     <div class="form-group">
                         <input asp-for="Password" type="password" class="form-control" name="Password" placeholder="Password" />
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Email" class="form-control" name="Email" placeholder="Email" />
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Address" class="form-control" name="Address" placeholder="Address" />
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="HomeNumber" class="form-control" name="HomeNumber" placeholder="Home Number" />
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="WorkNumber" class="form-control" name="WorkNumber" placeholder="Work Number" />
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Mobile" class="form-control" name="Mobile" placeholder="Mobile" />
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary btn-block register-submit" type="submit"

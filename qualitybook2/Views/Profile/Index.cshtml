@@ -5,19 +5,19 @@
 
 <div class="container profile-container">
     <div class="row profile-row">
-        <div><h2 style="display:inline-block">Profile</h2><h5 style="display:inline-block;margin-left:20px;color:#0ce3ac"><a href="#" style="text-decoration:underline">edit</a></h5></div>
+        <div><h2 style="display:inline-block">Profile</h2></div>
         <div class="row">
             <div class="col-lg-6 col-md-3">
-                <h3>@Html.DisplayNameFor(model => model.CustomerCurrent.CustomerId):  @Html.DisplayFor(model => model.CustomerCurrent.CustomerId)</h3>
+                <h3>@Html.DisplayNameFor(model => model.CustomerCurrent.CustomerId):  <h5>@Html.DisplayFor(model => model.CustomerCurrent.CustomerId)</h5></h3>
                 <h3>@Html.DisplayNameFor(model => model.CustomerCurrent.CustomerName):  @Html.DisplayFor(model => model.CustomerCurrent.CustomerName)</h3>
                 <h3>@Html.DisplayNameFor(model => model.CustomerCurrent.Email):  @Html.DisplayFor(model => model.CustomerCurrent.Email)</h3>
-                <h3>@Html.DisplayNameFor(model => model.CustomerCurrent.LockoutEnd):  @Html.DisplayFor(model => model.CustomerCurrent.LockoutEnd)</h3>
+                @*<h3>@Html.DisplayNameFor(model => model.CustomerCurrent.LockoutEnd):  @Html.DisplayFor(model => model.CustomerCurrent.LockoutEnd)</h3>*@
             </div>
             <div class="col-lg-6 col-md-9">
                 <h3>@Html.DisplayNameFor(model => model.CustomerCurrent.Address):  @Html.DisplayFor(model => model.CustomerCurrent.Address)</h3>
-                <h3>@Html.DisplayNameFor(model => model.CustomerCurrent.PhoneNumberHome):  @Html.DisplayFor(model => model.CustomerCurrent.PhoneNumberHome)</h3>
-                <h3>@Html.DisplayNameFor(model => model.CustomerCurrent.PhoneNumberWork):  @Html.DisplayFor(model => model.CustomerCurrent.PhoneNumberWork)</h3>
-                <h3>@Html.DisplayNameFor(model => model.CustomerCurrent.PhoneNumberMobile):  @Html.DisplayFor(model => model.CustomerCurrent.PhoneNumberMobile)</h3>
+                <h3>Contact Number :  @Html.DisplayFor(model => model.CustomerCurrent.PhoneNumberHome)</h3>
+                @*<h3>@Html.DisplayNameFor(model => model.CustomerCurrent.PhoneNumberWork):  @Html.DisplayFor(model => model.CustomerCurrent.PhoneNumberWork)</h3>
+                <h3>@Html.DisplayNameFor(model => model.CustomerCurrent.PhoneNumberMobile):  @Html.DisplayFor(model => model.CustomerCurrent.PhoneNumberMobile)</h3>*@
             </div>
         </div>
         <br />
@@ -55,8 +55,6 @@
                                             routeData.Add("orderId", order.OrderId.ToString());
                                         }
                                         <a asp-area="" asp-controller="Profile" asp-action="GetOrderDetailsOfOrder" asp-all-route-data="routeData">Select</a>
-                                        |
-                                        Change To Waiting
                                     </td>
                                 </tr>
                             }

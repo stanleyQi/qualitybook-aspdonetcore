@@ -78,10 +78,21 @@
                                         IDictionary<string, string> routeData = new Dictionary<string, string>();
                                         routeData.Add("customerId", Model.CustomerIdCurrent);
                                         routeData.Add("orderId", order.OrderId.ToString());
+                                        routeData.Add("state", order.State);
                                     }
                                     <a asp-area="Admin" asp-controller="Home" asp-action="GetOrderDetailsOfOrder" asp-all-route-data="routeData">Select</a>
                                     |
-                                    Change To Waiting
+                                    @{
+                                        if (order.State == "waiting")
+                                        {
+                                            <span><a asp-area="Admin" asp-controller="Home" asp-action="changeStatus" asp-all-route-data="routeData">Change To shipped</a></span>
+
+                                        }
+                                        else
+                                        {
+                                            <span><a asp-area="Admin" asp-controller="Home" asp-action="changeStatus" asp-all-route-data="routeData">Change To waiting</a></span>
+                                        }
+                                    }
                                 </td>
                             </tr>
                         }

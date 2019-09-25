@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using qualitybook2.Models;
 using qualitybook2.ViewModels;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace qualitybook2.Controllers
 {
@@ -46,8 +45,11 @@ namespace qualitybook2.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                 if (result.Succeeded)
                 {
-                    if (string.IsNullOrEmpty(loginViewModel.ReturnUrl) && !_userManager.GetRolesAsync(user).Result.Contains("admin"))  return RedirectToAction("Index","Home");
-                    if (string.IsNullOrEmpty(loginViewModel.ReturnUrl) && _userManager.GetRolesAsync(user).Result.Contains("admin")) return RedirectToAction("Index", "Admin/Home");
+                    if (string.IsNullOrEmpty(loginViewModel.ReturnUrl) && !_userManager.GetRolesAsync(user).Result.Contains("admin"))
+                        //return RedirectToAction("Index","Home");
+                        return RedirectToAction("Index", "Profile");
+                    if (string.IsNullOrEmpty(loginViewModel.ReturnUrl) && _userManager.GetRolesAsync(user).Result.Contains("admin"))
+                        return RedirectToAction("Index", "Admin/Home");
 
                     return Redirect(loginViewModel.ReturnUrl);
                     
@@ -60,7 +62,7 @@ namespace qualitybook2.Controllers
                 return View(loginViewModel);
             }
 
-            ModelState.AddModelError("", "Wrong user name or password.");
+            ModelState.AddModelError("", "Wrong user name or password. Or try to register a new account.");
             return View(loginViewModel);
         }
 
@@ -71,23 +73,57 @@ namespace qualitybook2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = loginViewModel.UserName };
-                var result = await _userManager.CreateAsync(user, loginViewModel.Password);
+                var user = new ApplicationUser() { UserName = registerViewModel.UserName };
+                var result = await _userManager.CreateAsync(user, registerViewModel.Password);
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    var phoneNumber = "";
+                    var email = "";
+                    var address = "";
+
+                    //await _userManager.SetEmailAsync(user,registerViewModel.Email);
+                    if (registerViewModel.HomeNumber.Trim()!="")
+                    {
+                        phoneNumber=registerViewModel.HomeNumber;
+                    }
+                    else if (registerViewModel.HomeNumber.Trim() == "" && registerViewModel.Mobile.Trim() != "")
+                    {
+                        phoneNumber=registerViewModel.Mobile;
+                    }
+                    else if (registerViewModel.HomeNumber.Trim() == "" 
+                        && registerViewModel.Mobile.Trim() == "" 
+                        && registerViewModel.WorkNumber.Trim()!= "")
+                    {
+                        phoneNumber=registerViewModel.WorkNumber;
+                    }
+                    else
+                    {
+                        phoneNumber= "";
+                    }
+
+                    email = registerViewModel.Email;
+                    address = registerViewModel.Address;
+
+                    user.Email = email;
+                    user.PhoneNumber = phoneNumber;
+                    user.Address = address;
+
+                    await _userManager.UpdateAsync(user);
+
+                    //return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
                 else
                 {
                     ModelState.AddModelError("", "Failed : PasswordTooShort,PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper");
                 }
             }
-            return View(loginViewModel);
+            return View(registerViewModel);
         }
 
         [Authorize]
