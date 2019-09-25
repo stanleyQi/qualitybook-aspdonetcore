@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using qualitybook2.Extensions;
 using qualitybook2.Models;
 using qualitybook2.ViewModels;
 
@@ -16,11 +17,13 @@ namespace qualitybook2.Controllers
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IEmailSender _emailSender;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         public IActionResult Login(string returnUrl)
@@ -45,6 +48,20 @@ namespace qualitybook2.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                 if (result.Succeeded)
                 {
+                    if (user.LockoutEnabled == false)
+                    {
+                        ModelState.AddModelError(string.Empty, "Your Account is currently Disabled, please consult the Administrator.");
+                        return View(loginViewModel);
+                    }
+
+
+                    if (!await _userManager.IsEmailConfirmedAsync(user))
+                    {
+                        ModelState.AddModelError(string.Empty,
+                                      "You must have a confirmed email to log in.");
+                        return View(loginViewModel);
+                    }
+
                     if (string.IsNullOrEmpty(loginViewModel.ReturnUrl) && !_userManager.GetRolesAsync(user).Result.Contains("admin"))
                         //return RedirectToAction("Index","Home");
                         return RedirectToAction("Index", "Profile");
@@ -115,12 +132,26 @@ namespace qualitybook2.Controllers
 
                     await _userManager.UpdateAsync(user);
 
+                    //sendemail for confirmation
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    try
+                    {
+                        await _emailSender.SendEmailConfirmationAsync(user.Email, callbackUrl);
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                    
+
                     //return RedirectToAction("Index", "Home");
                     return RedirectToAction("Login", "Account");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Failed : PasswordTooShort,PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper");
+                    ModelState.AddModelError("", "Failed : Retry your password setting.");
                 }
             }
             return View(registerViewModel);
@@ -137,6 +168,23 @@ namespace qualitybook2.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{userId}'.");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
     }
 }

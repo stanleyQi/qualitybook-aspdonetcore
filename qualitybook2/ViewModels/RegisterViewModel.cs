@@ -24,12 +24,15 @@ namespace qualitybook2.ViewModels
         [Display(Name = "Address")]
         public string Address { get; set; }
 
+        [Required]
         [Display(Name = "Home Number")]
         public string HomeNumber { get; set; }
 
+        [Required]
         [Display(Name = "Work Number")]
         public string WorkNumber { get; set; }
 
+        [Required]
         [Display(Name = "Mobile")]
         public string Mobile { get; set; }
 

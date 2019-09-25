@@ -14,6 +14,7 @@ using qualitybook2.Data.interfaces;
 using qualitybook2.Data.Repositories;
 using Microsoft.AspNetCore.Http;
 using qualitybook2.Models;
+using qualitybook2.Extensions;
 
 namespace qualitybook2  
 {
@@ -32,7 +33,10 @@ namespace qualitybook2
             services.AddDbContext<QualityBookDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+                        {
+                            config.SignIn.RequireConfirmedEmail = true;
+                        })
                         .AddEntityFrameworkStores<QualityBookDbContext>()
                         .AddDefaultTokenProviders();
 
@@ -40,10 +44,10 @@ namespace qualitybook2
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
-                //options.Password.RequireDigit = true;
-                //options.Password.RequiredLength = 8;
+                //options.Password.RequireDigit = false;
+                //options.Password.RequiredLength = 3;
                 //options.Password.RequireNonAlphanumeric = false;
-                //options.Password.RequireUppercase = true;
+                //options.Password.RequireUppercase = false;
                 //options.Password.RequireLowercase = false;
                 //options.Password.RequiredUniqueChars = 6;
 
@@ -79,6 +83,8 @@ namespace qualitybook2
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(servicesProvider => ShoppingCart.GetCart(servicesProvider));
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
             services.AddMemoryCache();
